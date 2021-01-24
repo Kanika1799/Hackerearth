@@ -2,15 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 
 import "antd/dist/antd.css";
-import { Input, Button } from "antd";
-import { AudioOutlined, DownOutlined } from "@ant-design/icons";
+import { Input } from "antd";
+import { AudioOutlined } from "@ant-design/icons";
 import Results from "../Results";
 import styled from "styled-components";
 import "./index.css";
 import { songCreators } from "../../redux/reducers/songReducer";
-import { localeCreators } from "../../redux/reducers/localeReducer";
-import { IntlProvider, FormattedMessage, FormattedNumber } from "react-intl";
-import { useSelector } from "react-redux";
 
 const { Search } = Input;
 const Title = styled.h1`
@@ -38,16 +35,9 @@ function HomePage({ dispatchSongPhrase, dispatchLocale }) {
     // props.songCreators.requestSimilarSongs(value)
   };
 
-  const changeLocale = (localeName) => {
-    console.log("LocaleName", localeName);
-    dispatchLocale(localeName);
-  };
-
   return (
     <div>
-      <Title>
-        <FormattedMessage id="siteTitle" />
-      </Title>
+      <Title>Search Your Favourite Book</Title>
 
       <Search
         style={{ margin: 10, width: 600 }}
@@ -57,26 +47,6 @@ function HomePage({ dispatchSongPhrase, dispatchLocale }) {
         suffix={suffix}
         onSearch={onSearch}
       />
-      <Button
-        type="primary"
-        onClick={() => {
-          changeLocale("hi");
-        }}
-        className="LanguageButton"
-        style={{ height: 38 }}
-      >
-        Switch To Hindi
-      </Button>
-      <Button
-        type="primary"
-        onClick={() => {
-          changeLocale("en");
-        }}
-        className="LanguageButton"
-        style={{ height: 38 }}
-      >
-        Switch To English
-      </Button>
 
       <Results />
     </div>
@@ -85,11 +55,9 @@ function HomePage({ dispatchSongPhrase, dispatchLocale }) {
 
 function mapDispatchToProps(dispatch) {
   const { requestSimilarSongs } = songCreators;
-  const { switchLocale } = localeCreators;
   return {
     dispatchSongPhrase: (songPhrase) =>
       dispatch(requestSimilarSongs(songPhrase)),
-    dispatchLocale: (localeName) => dispatch(switchLocale(localeName)),
   };
 }
 
